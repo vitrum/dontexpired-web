@@ -1,17 +1,18 @@
 <template>
   <div class='form-element'>
     <h2> {{ state.title }} </h2>
-      <div><input type='text' v-model='state.name' placeholder='产品名称'/></div>
-      <div><input type='text' v-model='state.brand' placeholder='品牌' /></div>
-      <div><input type="date" v-model='state.manufacturingDate' placeholder='生产日期' /></div>
-      <div><input type='text' v-model='state.keepDate' placeholder='保值期/天' /></div>
-      <div><input type="date" v-model='state.expiryDate' placeholder='过期日期' /></div>
-      <div><input type='text' v-model='state.wegth' placeholder='计量/克/公斤' /></div>
-      <div><input type='text' v-model='state.sub' placeholder='大类' /></div>
+      <div><input type='text' :value='state.name' placeholder='产品名称' @input="format($event,'name')"/></div>
+      <div><input type='text' :value='state.brand' @input="format($event,'brand')" placeholder='品牌' /></div>
+      <div><input type="date" :value='state.manufacturingDate' @input="format($event,'manufacturingDate')"  placeholder='生产日期' /></div>
+      <div><input type='text' :value='state.keepDate' @input="format($event,'keepDate')" placeholder='保值期/天' /></div>
+      <div><input type="date" :value='state.expiryDate' @input="format($event,'expiryDate')" placeholder='过期日期' /></div>
+      <div><input type='text' :value='state.wegth' @input="format($event,'wegth')" placeholder='计量/克/公斤' /></div>
+      <div><input type='text' :value='state.sub' @input="format($event,'sub')" placeholder='大类' /></div>
       <!-- <div><input type='text' v-model='state.tub' placeholder='小类' /></div> -->
-      <div><input type='text' v-model='state.tag' placeholder='tag' /></div>
+      <div><input type='text' :value='state.tag' @input="format($event,'tag')" placeholder='tag' /></div>
       <div><button class='button-primary' @click='add'> Submit </button></div>
     <div>  Values: {{ state }} </div>
+    <div>  input: {{ input }} </div>
   </div>
 </template>
 <script>
@@ -23,6 +24,7 @@
   export default {
     setup () {
       const count = ref(0)
+      // let input = true
       const add = () => {
         count.value++
         let data = {
@@ -42,6 +44,14 @@
         console.log('add', data, res)
 
       }
+      const format = ($event, name) => {
+        console.log('format', $event, name)
+        // input = $event.composed
+        if ($event.composed) {
+          return
+        }
+        state[name] = $event.target.value
+      }
       const state = reactive({
         title: '赶紧加上，别过期了',
         name: '',
@@ -57,7 +67,9 @@
       return {
         count,
         add,
-        state
+        state,
+        format,
+        // input
       }
     }
   }
