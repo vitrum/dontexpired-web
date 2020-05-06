@@ -1,17 +1,17 @@
 <template>
   <div class='form-element'>
     <h2> {{ state.title }} </h2>
-      <p><input type='text' v-model='state.name' placeholder='产品名称'/></p>
-      <p><input type='text' v-model='state.brand' placeholder='品牌' /></p>
-      <p><input type='text' v-model='state.manufacturingDate' placeholder='生产日期' /></p>
-      <p><input type='text' v-model='state.expiryDate' placeholder='过期日期' /></p>
-      <p><input type='text' v-model='state.keepDate' placeholder='保值期' /></p>
-      <p><input type='text' v-model='state.wegth' placeholder='计量' /></p>
-      <p><input type='text' v-model='state.sub' placeholder='大类' /></p>
-      <!-- <p><input type='text' v-model='state.tub' placeholder='小类' /></p> -->
-      <p><input type='text' v-model='state.tag' placeholder='tag' /></p>
-      <p><button @click='add'> Submit </button></p>
-    <p>  Values: {{ state.name + ' ' + state.manufacturingDate }} </p>
+      <div><input type='text' v-model='state.name' placeholder='产品名称'/></div>
+      <div><input type='text' v-model='state.brand' placeholder='品牌' /></div>
+      <div><input type="date" v-model='state.manufacturingDate' placeholder='生产日期' /></div>
+      <div><input type='text' v-model='state.keepDate' placeholder='保值期/天' /></div>
+      <div><input type="date" v-model='state.expiryDate' placeholder='过期日期' /></div>
+      <div><input type='text' v-model='state.wegth' placeholder='计量/克/公斤' /></div>
+      <div><input type='text' v-model='state.sub' placeholder='大类' /></div>
+      <!-- <div><input type='text' v-model='state.tub' placeholder='小类' /></div> -->
+      <div><input type='text' v-model='state.tag' placeholder='tag' /></div>
+      <div><button @click='add'> Submit </button></div>
+    <div>  Values: {{ state.name + ' ' + state.manufacturingDate }} </div>
   </div>
 </template>
 <script>
@@ -62,3 +62,42 @@
     }
   }
 </script>
+<style>
+.form-element {
+  max-width: 550px;
+  -webkit-box-flex: 1;
+  flex: 1 1 100%;
+  margin: auto;
+}
+.form-element div {
+  -ms-flex-align: center;
+  -webkit-box-align: center;
+  -webkit-transition: .3s cubic-bezier(.25,.8,.5,1);
+  align-items: center;
+  color: inherit;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 16px;
+  font-weight: 400;
+  height: 48px;
+  margin: 0;
+  padding: 0 16px;
+  position: relative;
+  text-decoration: none;
+  transition: .3s cubic-bezier(.25,.8,.5,1);
+
+}
+
+.form-element input {
+  -ms-flex: 1 1 auto;
+  -webkit-box-flex: 1;
+  flex: 1 1 auto;
+  line-height: 20px;
+  max-width: 100%;
+  min-width: 0;
+  padding: 8px 10px;
+  width: 100%;
+  font-size: 16px;
+}
+</style>
