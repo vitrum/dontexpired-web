@@ -1,8 +1,40 @@
 <template>
-  <div class="hello">
-    <p v-for="item in items" :key="item._id" class="text-center">
+  <div class="container">
+    <div class="v-card">
+      <div class="v-progress-linear my-0" style="height: 7px;">
+        <div class="v-progress-linear__background primary" style="height: 7px; opacity: 0.3; width: 100%;">
+        </div>
+        <div class="v-progress-linear__bar"><!---->
+          <div class="v-progress-linear__bar__determinate primary" style="width: 0%;"></div>
+        </div>
+      </div>
+      <div class="v-card__actions px-3" >
+        <span class="primary--text">
+          {{length}} item left
+        </span>
+        <div class="spacer"></div>
+        <div class="elevation" >
+          <a href="#/all" class="" value="all" style="position: relative;">
+            <div class="v-btn__content">
+              所有
+            </div>
+          </a>
+          <a href="#/active" class="" value="active" style="position: relative;">
+            <div class="v-btn__content">
+            还可用
+            </div>
+          </a>
+          <a href="#/completed" class="" value="completed" data-only-child="true" style="position: relative;">
+            <div class="v-btn__content">
+            过期的
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="v-card" v-for="item in items" :key="item._id">
       {{item}}
-    </p>
+    </div>
   </div>
 </template>
 
@@ -40,9 +72,11 @@ export default {
   setup () {
     let items = []
     let isloading = false
+    let length = 0
     return {
       items,
-      isloading
+      isloading,
+      length
     }
   },
   mounted() {
@@ -50,7 +84,8 @@ export default {
     getData().then((data) => {
       this.isloading = false
       this.items = toMap(data)
-      console.log('mounted()',data,toMap(data))
+      this.length = data[0].length
+      console.log('mounted()',data,toMap(data), data[0].length)
     });
   },
   methods: {
@@ -66,19 +101,24 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
+<style >
+.container {
+  max-width: 550px;
+  padding: 8px;
+  -webkit-box-flex: 1;
+  flex: 1 1 100%;
+  margin: auto;
+  width: 100%;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.v-card {
+  border-radius: 2px;
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+  display: block;
+  min-width: 0;
+  position: relative;
+  text-decoration: none;
+  transition: .3s cubic-bezier(.25,.8,.5,1);
+  background-color: #fff;
+  margin-top: 10px;
 }
 </style>

@@ -12,7 +12,7 @@
 body {
   color: #42b983;
   text-align: center;
-  background-color: #797a7a;
+  background-color: rgb(245, 245, 245);;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
