@@ -27,6 +27,7 @@
       // let input = true
       const add = () => {
         count.value++
+        console.log('add ', state)
         let data = {
           name: state.name,
           brand: state.brand,
@@ -40,17 +41,18 @@
         }
         console.log('add ', state)
         // 为属性赋值
+        
         let res = api.itemApi.addItem(data)
-        console.log('add', data, res)
-
+        console.log('add', data, api, res)
+        alert(JSON.stringify(res))
       }
       const format = ($event, name) => {
-        console.log('format', $event, name)
+        console.log('format', name, state)
         // input = $event.composed
-        if ($event.composed) {
+        if (!$event.composed) {
           return
         }
-        state[name] = $event.target.value
+        state[name] =  $event.target.value
       }
       const state = reactive({
         title: '赶紧加上，别过期了',

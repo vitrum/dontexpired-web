@@ -8,23 +8,23 @@
           <div class="v-progress-linear__bar__determinate primary" style="width: 0%;"></div>
         </div>
       </div>
-      <div class="v-card__actions px-3" >
-        <span class="primary--text">
-          {{length}} item left
+      <div class="v-card-action">
+        <span class="text">
+          {{length}} 件
         </span>
         <div class="spacer"></div>
         <div class="elevation" >
-          <a href="#/all" class="" value="all" style="position: relative;">
+          <a href="#/all" class="filter" value="all" style="position: relative;">
             <div class="v-btn__content">
               所有
             </div>
           </a>
-          <a href="#/active" class="" value="active" style="position: relative;">
+          <a href="#/active" class="filter" value="active" style="position: relative;">
             <div class="v-btn__content">
             还可用
             </div>
           </a>
-          <a href="#/completed" class="" value="completed" data-only-child="true" style="position: relative;">
+          <a href="#/completed" class="filter" value="completed" data-only-child="true" style="position: relative;">
             <div class="v-btn__content">
             过期的
             </div>
@@ -120,5 +120,21 @@ export default {
   transition: .3s cubic-bezier(.25,.8,.5,1);
   background-color: #fff;
   margin-top: 10px;
+
+}
+.text {
+  padding: 4px 10px;
+  display: block;
+}
+.v-card-action {
+  display: flex;
+  flex-direction: row;
+}
+.elevation {
+  display: flex;
+  flex-direction: row;
+}
+.filter {
+  padding: 4px 10px;
 }
 </style>
