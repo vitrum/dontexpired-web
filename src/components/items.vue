@@ -112,7 +112,7 @@ export default {
 }
 .v-card {
   border-radius: 2px;
-  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+  box-shadow: 0 1px 1px -1px rgba(0,0,0,.05), 0 1px 1px 0 rgba(0,0,0,.05), 0 1px 3px 0 rgba(0,0,0,.05);
   display: block;
   min-width: 0;
   position: relative;
@@ -120,10 +120,11 @@ export default {
   transition: .3s cubic-bezier(.25,.8,.5,1);
   background-color: #fff;
   margin-top: 10px;
-
+  min-height: 36px;
+  line-height: 1.5;
 }
 .text {
-  padding: 4px 10px;
+  padding: 0 10px;
   display: block;
 }
 .v-card-action {

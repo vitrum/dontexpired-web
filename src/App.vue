@@ -1,9 +1,11 @@
 <template>
   <div id="app">
+    <h2> 别过期了 </h2>
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/add">Add</router-link>
     </div>
+
     <router-view/>
   </div>
 </template>

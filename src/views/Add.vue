@@ -1,15 +1,57 @@
 <template>
   <div class='form-element'>
-    <h2> {{ state.title }} </h2>
-      <div><input type='text' :value='state.name' placeholder='产品名称' @input="format($event,'name')"/></div>
-      <div><input type='text' :value='state.brand' @input="format($event,'brand')" placeholder='品牌' /></div>
-      <div><input type="date" :value='state.manufacturingDate' @input="format($event,'manufacturingDate')"  placeholder='生产日期' /></div>
-      <div><input type='text' :value='state.keepDate' @input="format($event,'keepDate')" placeholder='保值期/天' /></div>
-      <div><input type="date" :value='state.expiryDate' @input="format($event,'expiryDate')" placeholder='过期日期' /></div>
-      <div><input type='text' :value='state.wegth' @input="format($event,'wegth')" placeholder='计量/克/公斤' /></div>
-      <div><input type='text' :value='state.sub' @input="format($event,'sub')" placeholder='大类' /></div>
+      <div>
+        <input type='text' 
+          :value='state.name' 
+          placeholder='产品名称' 
+          @input="format($event,'name')"  
+          @compositionstart="onCompositionStart"
+          @compositionend="onCompositionEnd($event,'name')" 
+        />
+      </div>
+      <div>
+        <input 
+          type='text' 
+          :value='state.brand'
+          @input="format($event,'brand')" 
+          placeholder='品牌' 
+          @compositionstart="onCompositionStart"
+          @compositionend="onCompositionEnd($event,'brand')" 
+        />
+      </div>
+      <div>
+        <input type="date" :value='state.manufacturingDate' @input="format($event,'manufacturingDate')"  placeholder='生产日期' />
+      </div>
+      <div>
+        <input type='text' :value='state.keepDate' @input="format($event,'keepDate')" placeholder='保值期/天' />
+      </div>
+      <div>
+        <input type="date" :value='state.expiryDate' @input="format($event,'expiryDate')" placeholder='过期日期' />
+      </div>
+      <div>
+        <input type='text' :value='state.wegth' @input="format($event,'wegth')" placeholder='计量/克/公斤' />
+      </div>
+      <div>
+        <input 
+          type='text' 
+          :value='state.sub' 
+          @input="format($event,'sub')" 
+          placeholder='大类' 
+          @compositionstart="onCompositionStart"
+          @compositionend="onCompositionEnd($event,'sub')" 
+        />
+      </div>
       <!-- <div><input type='text' v-model='state.tub' placeholder='小类' /></div> -->
-      <div><input type='text' :value='state.tag' @input="format($event,'tag')" placeholder='tag' /></div>
+      <div>
+        <input 
+          type='text' 
+          :value='state.tag'
+          @input="format($event,'tag')" 
+          placeholder='tag' 
+          @compositionstart="onCompositionStart"
+          @compositionend="onCompositionEnd($event,'tag')" 
+        />
+      </div>
       <div><button class='button-primary' @click='add'> 提交 </button></div>
   </div>
 </template>
@@ -21,7 +63,8 @@
   export default {
     setup () {
       const count = ref(0)
-      // let input = true
+      // let input = {}
+      let inputLock = false
       const add = () => {
         count.value++
         let data = {
@@ -46,6 +89,8 @@
             data.expiryDate = tmpExpiryDate.utc(0).format('YYYY-MM-DD')
           }
         }
+        // alert(JSON.stringify(data))
+        console.log(api)
         let res = api.itemApi.addItem(data)
         if (res.objectId){
           alert('添加成功！')
@@ -54,13 +99,14 @@
       const format = ($event, name) => {
         // let tmpExpiryDate = moment().add(state.keepDate, 'd')
         // console.log('moment', tmpExpiryDate, tmpExpiryDate.utc(0).format('YYYY-MM-DD'), state.manufacturingDate)
-        if (!$event.composed) {
+        // input = $event 
+        console.log('format', $event, inputLock )
+        if (inputLock) {
           return
         }
         state[name] =  $event.target.value
       }
       const state = reactive({
-        title: '赶紧加上，别过期了',
         name: '',
         brand: '',
         manufacturingDate: '',
@@ -71,12 +117,26 @@
         tub: '',
         tag: '',
       })
+      const onCompositionStart = ()  => {
+        inputLock = true;
+      }
+      const onCompositionEnd = (e, name)  =>  {
+        console.log('onCompositionEnd', e, inputLock)
+        // this.filterText = e.data;
+        inputLock = false;
+        state[name] = state[name] + e.data
+        
+      }
+
       return {
         count,
         add,
         state,
         format,
-        // input
+        // input,
+        inputLock,
+        onCompositionStart,
+        onCompositionEnd
       }
     }
   }
