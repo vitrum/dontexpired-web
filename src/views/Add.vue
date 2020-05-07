@@ -10,16 +10,13 @@
       <div><input type='text' :value='state.sub' @input="format($event,'sub')" placeholder='大类' /></div>
       <!-- <div><input type='text' v-model='state.tub' placeholder='小类' /></div> -->
       <div><input type='text' :value='state.tag' @input="format($event,'tag')" placeholder='tag' /></div>
-      <div><button class='button-primary' @click='add'> Submit </button></div>
-    <div>  Values: {{ state }} </div>
-    <div>  input: {{ input }} </div>
+      <div><button class='button-primary' @click='add'> 提交 </button></div>
   </div>
 </template>
 <script>
   import { ref, reactive } from 'vue'
+  import moment from 'moment'
   import api from '@/api/index.js'
-  
-
 
   export default {
     setup () {
@@ -27,7 +24,6 @@
       // let input = true
       const add = () => {
         count.value++
-        console.log('add ', state)
         let data = {
           name: state.name,
           brand: state.brand,
@@ -39,16 +35,25 @@
           tub: state.tub,
           tag: state.tag,
         }
-        console.log('add ', state)
-        // 为属性赋值
-        
+        // 到期时间计算
+        if ( state.expiryDate === '' && state.keepDate !== '') {
+          if (state.manufacturingDate === ''){
+            let tmpExpiryDate = moment().add(state.keepDate, 'd')
+            data.expiryDate = tmpExpiryDate.utc(0).format('YYYY-MM-DD')
+            console.log('keepDate', state.keepDate, state.expiryDate, data.expiryDate)
+          }else{
+            let tmpExpiryDate = moment(state.manufacturingDate).add(state.keepDate, 'd')
+            data.expiryDate = tmpExpiryDate.utc(0).format('YYYY-MM-DD')
+          }
+        }
         let res = api.itemApi.addItem(data)
-        console.log('add', data, api, res)
-        alert(JSON.stringify(res))
+        if (res.objectId){
+          alert('添加成功！')
+        }
       }
       const format = ($event, name) => {
-        console.log('format', name, state)
-        // input = $event.composed
+        // let tmpExpiryDate = moment().add(state.keepDate, 'd')
+        // console.log('moment', tmpExpiryDate, tmpExpiryDate.utc(0).format('YYYY-MM-DD'), state.manufacturingDate)
         if (!$event.composed) {
           return
         }

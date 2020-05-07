@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="v-card" v-for="item in items" :key="item._id">
-      {{item}}
+      {{item.name}} {{item.expiryDate}} 
     </div>
   </div>
 </template>
