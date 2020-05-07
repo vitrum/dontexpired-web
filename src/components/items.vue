@@ -10,21 +10,21 @@
       </div>
       <div class="v-card-action">
         <span class="text">
-          {{length}} 件
+          总计：{{length}}件
         </span>
         <div class="spacer"></div>
         <div class="elevation" >
-          <a href="#/all" class="filter" value="all" style="position: relative;">
+          <a href="#/all" class="v-btn  v-btn--active filter" value="all" style="position: relative;">
             <div class="v-btn__content">
               所有
             </div>
           </a>
-          <a href="#/active" class="filter" value="active" style="position: relative;">
+          <a href="#/active" class="v-btn filter" value="active" style="position: relative;">
             <div class="v-btn__content">
             还可用
             </div>
           </a>
-          <a href="#/completed" class="filter" value="completed" data-only-child="true" style="position: relative;">
+          <a href="#/completed" class="v-btn filter" value="completed" data-only-child="true" style="position: relative;">
             <div class="v-btn__content">
             过期的
             </div>
@@ -136,5 +136,45 @@ export default {
 }
 .filter {
   padding: 4px 10px;
+}
+.spacer {
+  -ms-flex-positive: 1!important;
+  -webkit-box-flex: 1!important;
+  flex-grow: 1!important;
+}
+.v-btn {
+  -webkit-box-pack: center;
+  border-radius: 0;
+  justify-content: center;
+  margin: 0;
+  min-width: auto;
+  opacity: .4;
+  padding: 0 8px;
+  width: auto;
+  text-decoration: none;
+}
+.v-btn.v-btn--active {
+    opacity: 1;
+}
+.v-btn__content {
+  -webkit-box-align: center;
+  -webkit-box-flex: 1;
+  -webkit-box-pack: center;
+  -webkit-transition: .3s cubic-bezier(.25,.8,.5,1);
+  align-items: center;
+  border-radius: inherit;
+  color: inherit;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: center;
+  margin: 0 auto;
+  position: relative;
+  transition: .3s cubic-bezier(.25,.8,.5,1);
+  white-space: nowrap;
+  width: inherit;
+  color: #4dba87 !important;
+  caret-color: #4dba87 !important;
 }
 </style>
