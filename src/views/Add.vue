@@ -41,7 +41,7 @@
           @compositionend="onCompositionEnd($event,'sub')" 
         />
       </div>
-      <!-- <div><input type='text' v-model='state.tub' placeholder='小类' /></div> -->
+      <div><input type='text' v-model='state.tub' placeholder='小类' /></div>
       <div>
         <input 
           type='text' 
@@ -59,6 +59,7 @@
   import { ref, reactive } from 'vue'
   import moment from 'moment'
   import api from '@/api/index.js'
+  import selectconfig from '@/config/select.config.js';
 
   export default {
     setup () {
@@ -116,18 +117,18 @@
         sub: '',
         tub: '',
         tag: '',
+        status: 'active'
       })
       const onCompositionStart = ()  => {
         inputLock = true;
       }
       const onCompositionEnd = (e, name)  =>  {
-        console.log('onCompositionEnd', e, inputLock)
+        // console.log('onCompositionEnd', e, inputLock)
         // this.filterText = e.data;
         inputLock = false;
         state[name] = state[name] + e.data
-        
       }
-
+      const selectList = selectconfig
       return {
         count,
         add,
@@ -136,7 +137,8 @@
         // input,
         inputLock,
         onCompositionStart,
-        onCompositionEnd
+        onCompositionEnd,
+        selectList,
       }
     }
   }
