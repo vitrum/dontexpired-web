@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="v-card" v-for="item in items" :key="item._id">
-      {{item.name}} {{item.expiryDate}} {{item.status}}
+      {{item.attributes.name}}{{item.attributes.expiryDate || ''}}{{item.attributes.status || ''}}
     </div>
   </div>
 </template>
@@ -56,11 +56,16 @@ function getData() {
 }
 // u转化为map形式
 function toMap(items) {
-  let item = {};
+  let list = [];
   items[0].forEach(i => {
-    item[i.id] = i.attributes;
+    let attributes = i.attributes
+    let id = i.id
+    list.push({
+      attributes,
+      '_id': id
+    })
   });
-  return item;
+  return list;
 }
 
 
