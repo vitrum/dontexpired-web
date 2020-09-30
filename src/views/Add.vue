@@ -93,8 +93,9 @@
         // alert(JSON.stringify(data))
         console.log(api)
         let res = api.itemApi.addItem(data)
-        if (res.objectId){
+        if (res){
           alert('添加成功！')
+          
         }
       }
       const format = ($event, name) => {

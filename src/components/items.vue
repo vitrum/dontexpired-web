@@ -14,17 +14,17 @@
         </span>
         <div class="spacer"></div>
         <div class="elevation" >
-          <a href="#/all" class="v-btn  v-btn--active filter" value="all" style="position: relative;">
+          <a href="/items/all" class="v-btn  v-btn--active filter" value="all" style="position: relative;">
             <div class="v-btn__content">
               所有
             </div>
           </a>
-          <a href="#/active" class="v-btn filter" value="active" style="position: relative;">
+          <a href="/items/active" class="v-btn filter" value="active" style="position: relative;">
             <div class="v-btn__content">
             还可用
             </div>
           </a>
-          <a href="#/completed" class="v-btn filter" value="completed" data-only-child="true" style="position: relative;">
+          <a href="/items/completed" class="v-btn filter" value="completed" data-only-child="true" style="position: relative;">
             <div class="v-btn__content">
             过期的
             </div>
@@ -32,8 +32,9 @@
         </div>
       </div>
     </div>
+    <div v-show="isloading">Loading</div>
     <div class="v-card" v-for="item in items" :key="item._id">
-      {{item.attributes.name}}{{item.attributes.expiryDate || ''}}{{item.attributes.status || ''}}
+      {{item.attributes.name}} {{item.attributes.expiryDate}} {{item.attributes.status}} 
     </div>
   </div>
 </template>
@@ -55,15 +56,18 @@ function getData() {
   });
 }
 // u转化为map形式
-function toMap(items) {
+function toMap(items, status) {
   let list = [];
+  let filterStatus = status || 'all'
   items[0].forEach(i => {
     let attributes = i.attributes
     let id = i.id
-    list.push({
-      attributes,
-      '_id': id
-    })
+    if ( filterStatus === 'all' || filterStatus === i.attributes.status ) {
+      list.push({
+        attributes,
+        '_id': id
+      })
+    }
   });
   return list;
 }
@@ -74,23 +78,25 @@ export default {
   props: {
     msg: String
   },
-  setup () {
-    let items = []
-    let isloading = false
-    let length = 0
+  data(){
     return {
-      items,
-      isloading,
-      length
+      items: [],
+      isloading: false,
+      length: 0
+    }
+  },
+  watch: {
+    $route(to, from) {
+      console.log('watch route', to, from)
     }
   },
   mounted() {
     this.isloading = true
     getData().then((data) => {
       this.isloading = false
-      this.items = toMap(data)
+      this.items = toMap(data, this.$route.params.status)
       this.length = data[0].length
-      console.log('mounted()',data,toMap(data), data[0].length)
+      console.log('mounted()',data,toMap(data), data[0].length, this.$route.params.status)
     });
   },
   methods: {
@@ -98,7 +104,7 @@ export default {
       this.isloading = true
       getData().then(data => {
         this.isloading = false
-        this.items = toMap(data)
+        this.items = toMap(data, this.$route.params.status)
       });
     }
   }
