@@ -91,11 +91,11 @@
           }
         }
         // alert(JSON.stringify(data))
-        console.log(api)
+        console.log(api, this)
         let res = api.itemApi.addItem(data)
         if (res){
           alert('添加成功！')
-          
+          this.$route.push('/')
         }
       }
       const format = ($event, name) => {
@@ -140,6 +140,11 @@
         onCompositionStart,
         onCompositionEnd,
         selectList,
+      }
+    },
+    methods: {
+      refresh() {
+
       }
     }
   }
